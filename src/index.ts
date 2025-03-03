@@ -101,3 +101,14 @@ async function example() {
 example().catch(console.error);
 // main().catch(console.error);
 console.log("TypeScript Node.js application started!");
+// Create the exact workflow from your diagram
+const pipeline = new Pipeline();
+pipeline
+  .addTask(new FetchAdsTask(services.facebookProvider))
+  .addTask(new IdentifyPerformersTask(services.adService))
+  .addTask(new IdentifyBrandTypeTask(services.brandService))
+  .addTask(new AnalyzeHighPerformersTask(services.patternService))
+  .addTask(new AnalyzeLowPerformersTask(services.patternService))
+  .addTask(new FetchExperienceTask(services.daraDenneyProvider))
+  .addTask(new CombineInsightsTask(services.insightService))
+  .addTask(new FormatOutputTask(services.formatter));

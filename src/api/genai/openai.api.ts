@@ -40,7 +40,7 @@ async function makeOpenAIRequest(options: OpenAIRequestOptions): Promise<ChatCom
     deployment,
   });
 
-  const { messages, model = "", maxTokens = 800, temperature = 0.7, frequencyPenalty = 0, presencePenalty = 0, tools = undefined, toolChoice = undefined } = options;
+  const { messages, model = "", maxTokens = 800, temperature = 0, frequencyPenalty = 0, presencePenalty = 0, tools = undefined, toolChoice = undefined } = options;
 
   try {
     // Format the request parameters to match the OpenAI API
