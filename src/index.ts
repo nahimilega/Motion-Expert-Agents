@@ -1,9 +1,9 @@
 // Example TypeScript Node.js application
 
-import { makeOpenAICall } from "./services/genai-service/openai.service";
-import { MetaApiClient } from "./services/meta-service/meta-api.client";
-import { MetaPerformanceWithImageService } from "./services/meta-service/meta-performance-with-image.service";
-import { MetaPerformanceService } from "./services/meta-service/meta-performance.sevice";
+import { makeOpenAICall } from "./api/genai/openai.api";
+import { MetaApiClient } from "./api/meta/meta-api";
+import { MetaPerformanceWithImageService } from "./data/meta/meta-performance-with-image.service";
+import { MetaPerformanceService } from "./data/meta/meta-performance.sevice";
 
 interface User {
   id: number;

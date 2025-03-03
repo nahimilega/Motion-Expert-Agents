@@ -1,18 +1,6 @@
 import axios, { AxiosError, isAxiosError } from "axios";
-import { MetaApiClient, PaginationResult } from "./meta-api.client";
-
-export interface MetaAdMetrics {
-  ad_id: string;
-  ad_name: string;
-  campaign_name: string;
-  is_active: boolean;
-  spend: number;
-  revenue: number;
-  roas: number;
-  is_carousel: boolean;
-  image_hashs: string[];
-  video_hashs: string[];
-}
+import { MetaApiClient, PaginationResult } from "../../api/meta/meta-api";
+import { MetaAdMetrics } from "../../models/MetaAd";
 
 export class MetaPerformanceService {
   private readonly metaApiClient: MetaApiClient;

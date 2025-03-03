@@ -1,10 +1,8 @@
-import { MetaApiClient } from "./meta-api.client";
-import { MetaPerformanceService, MetaAdMetrics } from "./meta-performance.sevice";
+import { MetaAdMetricsWithImages } from "../../models/MetaAd";
+import { MetaApiClient } from "../../api/meta/meta-api";
+import { MetaPerformanceService } from "./meta-performance.sevice";
 
 // Extend the existing interface with image URLs
-interface MetaAdMetricsWithImages extends MetaAdMetrics {
-  image_urls: string[];
-}
 
 export class MetaPerformanceWithImageService {
   private readonly apiClient: MetaApiClient;
