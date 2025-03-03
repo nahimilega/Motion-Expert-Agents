@@ -11,8 +11,8 @@ const pipeline = new WorkflowPipeline();
 pipeline.addTask(new FetchMetaAdsWithImage()).addTask(new IdentifyBrandType()).addTask(new FindStaticHighPerformingPattern()).addTask(new FindStaticLowPerformingPattern()).addTask(new GenerateRecommendations());
 
 const context: WorkflowPipelineContext = {
-  metaAccessToken: "EAACKYfAW95EBO0MPdKHskVVflZCry36jupsBzqZA8UvuKp8tOrTojRheg8HmhOB7YDAYfwH62jDLashsxeUPGHEKyP90lBKZC5IBWY9BFUjP8mRRJR7HpYR7fTCPSWAZB5FMYOOXkOWfYSmDVSqOcClD09PY32tTuh4aNXoRUWyUjwDZB4ZC8X3d05",
-  metaAccountId: "act_734914004580988",
+  metaAccessToken: "<Access Token>",
+  metaAccountId: "<Account ID>",
   creatorName: "dara_denney",
 };
 

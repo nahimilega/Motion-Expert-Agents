@@ -7,6 +7,9 @@
 4. ✅ Generate what's working, what's not, and recommendations (in json format)
 ![Dara Denny Workflow](https://fgimagestorage.blob.core.windows.net/images/flowchartofdara.png)
 
+## Demo Video
+[Watch Demo: Agent in Action](https://fuelgrowth.neetorecord.com/watch/9fe8f8e5ff13b1caedbe)
+
 ### Sample Output
 ```
 {
