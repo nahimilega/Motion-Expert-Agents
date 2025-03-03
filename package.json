@@ -21,6 +21,7 @@
     "@azure/openai": "^2.0.0",
     "axios": "^1.8.1",
     "axios-retry": "^4.5.0",
+    "dotenv": "^16.4.7",
     "openai": "^4.86.1"
   }
 }
