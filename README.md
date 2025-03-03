@@ -1,10 +1,10 @@
 # Dara Denny: Uncover winning patterns in your ads  
 
 ## Dara Denny Workflow
-1. Fetch active meta ads
-2. Extract winning and loosing patterns
-3. Combine with Dara's market knowledge
-4. Generate what's working, what's not, and recommendations (in json format)
+1. 📊 Fetch active meta ads
+2. 🔬Extract winning and loosing patterns
+3. 🧩Combine with Dara's market knowledge
+4. ✅ Generate what's working, what's not, and recommendations (in json format)
 ![Dara Denny Workflow](https://fgimagestorage.blob.core.windows.net/images/flowchartofdara.png)
 
 ### Sample Output
@@ -21,7 +21,7 @@
       "Messaging and Emotional Engagement: Negative comparisons and lack of emotional storytelling result in weak messaging that doesn't resonate with the audience.",
       "Discount Strategy and Pricing: 'Up to 50% OFF' lacks specificity and can be perceived as misleading, reducing trust in the offer."
     ],
-    "action_items": [
+    "recommendations": [
       "Enhance Visual Appeal: Implement single-focus imagery with high color contrast (70:30 ratio of primary to accent colors) to increase CTR by an estimated 15-20%. A/B test lifestyle imagery against product-only shots to identify optimal visual strategy.",
       "Refine Messaging: Develop 3-5 personalized audience segments with tailored messaging that leverages emotional triggers. Data shows personalized ads achieve 29% higher conversion rates and 5x higher CTR than generic alternatives.",
       "Clarify Discounts: Replace 'Up to X% OFF' messaging with transparent fixed discounts. Studies indicate specific offers like 'Flat 30% OFF' drive 27% higher conversion rates than variable discounts, with 68% of consumers citing transparency as a key trust factor.",
@@ -30,8 +30,9 @@
   }
 }
 ```
+# 🏗️ Technical Architecture
 ## Design Consideration
-- **Modular Design:** Each step in the workflow is encapsulated as a separate module (Single Responsibility), allowing for easy extension. Different types of workflows can be created by combining different steps using **Builder Pattern**
+- **🧩 Modular Design:** Each step in the workflow is encapsulated as a separate module (Single Responsibility), allowing for easy extension. Different types of workflows can be created by combining different steps using **🔨Builder Pattern**
 
 ```
 pipeline.addTask(new FetchMetaAdsWithImage())
@@ -41,7 +42,7 @@ pipeline.addTask(new FetchMetaAdsWithImage())
 .addTask(new GenerateRecommendations());
 pipeline.execute(context)
 ```
-- This is done via **Template Method Pattern** with abstract class WorkflowStep and concrete implementations for each step in the pipeline.
+- This is done via **📋Template Method Pattern** with abstract class WorkflowStep and concrete implementations for each step in the pipeline.
 
 ```
 export abstract class WorkflowStep {
@@ -64,17 +65,17 @@ export class FindStaticHighPerformingPattern extends WorkflowStep {
 }
 ```
 This approach offers several benefits:
-- **Decoupling**: Logic is separated from workflow construction
-- **Reusability**: Steps can be reused in different workflows
-- **Extensibility**: New steps can be added without modifying existing code
+- **🔄Decoupling**: Logic is separated from workflow construction
+- **♻️Reusability**: Steps can be reused in different workflows
+- **🔌Extensibility**: New steps can be added without modifying existing code
 
 
-### Technical Implementation
+### 💻Technical Implementation
 - **Stack:** TypeScript, Node.js
 - **Integration:** Meta API, OpenAI API
 
 ## Project Structure
-**Separation of Concerns:** Clear boundaries and decoupling between data access, intelligence, models, and workflow steps
+**🔀 Separation of Concerns:** Clear boundaries and decoupling between data access, intelligence, models, and workflow steps
 ```
 src/
 ├── api/                 # External API integrations 
@@ -92,7 +93,7 @@ src/
 │   ├── steps/           # Individual workflow steps decoupled from logic
 ```
 
-## Error Handling
+## 🛡️Error Handling
 - **Axios interceptors** for centralized request/response error processing
 - **Exponential backoff with jitter** for optimal retry distribution
 - **Graceful pagination failure** with partial results and detailed statistics for Meta API
