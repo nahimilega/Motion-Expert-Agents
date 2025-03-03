@@ -5,6 +5,13 @@ import { MetaApiClient } from "./api/meta/meta-api";
 import { MetaPerformanceWithImageService } from "./data/meta/meta-performance-with-image.service";
 import { MetaPerformanceService } from "./data/meta/meta-performance.sevice";
 import { findPatternInHighPerformingStaticAds } from "./intelligence/pattern-identification/high-performing-patterns";
+import { FetchMetaAdsWithImage } from "./workflows/steps/fetch-meta-ads";
+import { FindStaticHighPerformingPattern } from "./workflows/steps/find-high-performing-patterns";
+import { FindStaticLowPerformingPattern } from "./workflows/steps/find-low-performing-patterns";
+import { GenerateRecommendations } from "./workflows/steps/get-recommendation";
+import { IdentifyBrandType } from "./workflows/steps/identify-brand-type";
+import { WorkflowPipeline } from "./workflows/workflow-pipeline";
+import { WorkflowPipelineContext } from "./workflows/workflow-step";
 
 interface User {
   id: number;
@@ -98,17 +105,20 @@ async function example() {
   console.log("Filtered Ads:", filtered_ads.length);
   console.log(await findPatternInHighPerformingStaticAds(filtered_ads));
 }
-example().catch(console.error);
+// example().catch(console.error);
 // main().catch(console.error);
 console.log("TypeScript Node.js application started!");
 // Create the exact workflow from your diagram
-const pipeline = new Pipeline();
-pipeline
-  .addTask(new FetchAdsTask(services.facebookProvider))
-  .addTask(new IdentifyPerformersTask(services.adService))
-  .addTask(new IdentifyBrandTypeTask(services.brandService))
-  .addTask(new AnalyzeHighPerformersTask(services.patternService))
-  .addTask(new AnalyzeLowPerformersTask(services.patternService))
-  .addTask(new FetchExperienceTask(services.daraDenneyProvider))
-  .addTask(new CombineInsightsTask(services.insightService))
-  .addTask(new FormatOutputTask(services.formatter));
+const pipeline = new WorkflowPipeline();
+
+const context: WorkflowPipelineContext = {
+  metaAccessToken: "EAACKYfAW95EBO0MPdKHskVVflZCry36jupsBzqZA8UvuKp8tOrTojRheg8HmhOB7YDAYfwH62jDLashsxeUPGHEKyP90lBKZC5IBWY9BFUjP8mRRJR7HpYR7fTCPSWAZB5FMYOOXkOWfYSmDVSqOcClD09PY32tTuh4aNXoRUWyUjwDZB4ZC8X3d05",
+  metaAccountId: "act_734914004580988",
+};
+pipeline.addTask(new FetchMetaAdsWithImage()).addTask(new IdentifyBrandType());
+
+pipeline.execute(context).then((result) => {
+  console.log("Pipeline result:", result);
+});
+
+// pipeline.addTask(new FetchMetaAdsWithImage()).addTask(new IdentifyBrandType()).addTask(new FindStaticHighPerformingPattern()).addTask(new FindStaticLowPerformingPattern()).addTask(new GenerateRecommendations());

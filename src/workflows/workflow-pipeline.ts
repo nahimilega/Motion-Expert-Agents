@@ -1,6 +1,6 @@
 import { WorkflowPipelineContext, WorkflowStep } from "./workflow-step";
 
-class WorkflowPipeline {
+export class WorkflowPipeline {
   private steps: WorkflowStep[] = [];
 
   addTask(step: WorkflowStep): WorkflowPipeline {
@@ -8,10 +8,11 @@ class WorkflowPipeline {
     return this;
   }
 
-  async execute(initialContext: WorkflowPipeline): Promise<WorkflowPipelineContext> {
+  async execute(initialContext: WorkflowPipelineContext): Promise<WorkflowPipelineContext> {
     let context: WorkflowPipelineContext = { ...initialContext };
 
     for (const step of this.steps) {
+      console.log(`Executing step: ${step.name}`);
       await step.validate(context);
       context = await step.execute(context);
     }
