@@ -106,7 +106,6 @@ export class MetaPerformanceService {
       });
     }
 
-    // Check for carousel ads (child_attachments)
     const childAttachments = ad.creative?.object_story_spec?.link_data?.child_attachments;
     if (Array.isArray(childAttachments) && childAttachments.length > 0) {
       isCarousel = true;
@@ -116,10 +115,8 @@ export class MetaPerformanceService {
       });
     }
 
-    // Add video_id from video_data
     addMedia(ad.creative?.object_story_spec?.video_data?.video_id, videoHashs);
 
-    // Add video_id from creative
     if (ad.creative?.video_id && videoHashs.size === 0) {
       addMedia(ad.creative.video_id, videoHashs);
     }
