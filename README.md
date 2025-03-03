@@ -19,3 +19,6 @@ n to change parameterised
 
 
 query image together to reude stuff
+
+
+Less than 5 ads no insights

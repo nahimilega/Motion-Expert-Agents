@@ -117,7 +117,7 @@ export async function makeOpenAIRequestWithStringOutput(options: OpenAIRequestOp
  * @param tools - The tools configuration
  * @returns Whether the function call is valid
  */
-function parseFunctionCall(response: ChatCompletion): JSON {
+function parseFunctionCall(response: ChatCompletion): any {
   const responseMessage = response.choices[0].message;
 
   if (!responseMessage.tool_calls || responseMessage.tool_calls.length === 0) {
@@ -135,7 +135,7 @@ function parseFunctionCall(response: ChatCompletion): JSON {
  * @param doValidateFunctionCall - Whether to validate function calls
  * @returns Promise with the validated OpenAI API response
  */
-export async function makeOpenAIRequestWithFunctionCall(options: OpenAIRequestOptions, maxRetries: number = 3, retryDelay: number = 2000): Promise<JSON> {
+export async function makeOpenAIRequestWithFunctionCall(options: OpenAIRequestOptions, maxRetries: number = 3, retryDelay: number = 2000): Promise<any> {
   let attempts = 0;
 
   while (attempts < maxRetries) {

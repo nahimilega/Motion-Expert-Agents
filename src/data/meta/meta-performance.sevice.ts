@@ -1,5 +1,4 @@
-import axios, { AxiosError, isAxiosError } from "axios";
-import { MetaApiClient, PaginationResult } from "../../api/meta/meta-api";
+import { MetaApiClient } from "../../api/meta/meta-api";
 import { MetaAdMetrics } from "../../models/MetaAd";
 
 export class MetaPerformanceService {
@@ -13,7 +12,7 @@ export class MetaPerformanceService {
     return `/${accountId}/ads`;
   }
 
-  private buildApiParams(accessToken: string, n_days: number): Record<string, any> {
+  private buildApiParams(accessToken: string): Record<string, any> {
     return {
       fields: JSON.stringify(["name", "status", "effective_status", "id", "campaign{name}", "creative{image_url,image_hash,object_type,video_id,asset_feed_spec,object_story_spec}", "insights.date_preset(maximum){ created_time, spend, campaign_name,purchase_roas,action_values,actions}"]),
       access_token: accessToken,
@@ -164,8 +163,8 @@ export class MetaPerformanceService {
     }, 0);
   }
 
-  async getLastNDaysAds(accountId: string, accessToken: string, n_days: number = 7): Promise<MetaAdMetrics[]> {
-    var apiParms = this.buildApiParams(accessToken, n_days);
+  async getActiveAds(accountId: string, accessToken: string): Promise<MetaAdMetrics[]> {
+    var apiParms = this.buildApiParams(accessToken);
     var apiEndpoint: string = this.buildApiEndpoint(accountId);
     const results = await this.metaApiClient.fetchPaginatedData(apiEndpoint, apiParms);
     return await this.convertResultsToMetaAdMetrics(results.items);

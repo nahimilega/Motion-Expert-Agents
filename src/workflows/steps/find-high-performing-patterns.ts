@@ -1,11 +1,10 @@
-import { MetaPerformanceWithImageService } from "../../data/meta/meta-performance-with-image.service";
 import { findPatternInHighPerformingStaticAds } from "../../intelligence/pattern-identification/high-performing-patterns";
 import { WorkflowPipelineContext, WorkflowStep } from "../workflow-step";
 
 export class FindStaticHighPerformingPattern extends WorkflowStep {
   outputKey: string = "highPerformingPatterns";
   constructor() {
-    super("Fetch Meta Ads", ["metaAds"]);
+    super("Find high performing ads pattern", ["metaAds"]);
   }
   async validate(context: WorkflowPipelineContext): Promise<void> {
     await super.validate(context);

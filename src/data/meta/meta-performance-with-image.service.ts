@@ -24,8 +24,8 @@ export class MetaPerformanceWithImageService {
    * 4. If API call fails for an ad, skip it completely and move to next ad
    * 5. Return only the ads that were successfully processed
    */
-  async getLastNDaysAdsWithImages(accountId: string, accessToken: string, n_days: number = 7): Promise<MetaAdMetricsWithImages[]> {
-    const adMetrics = await this.performanceService.getLastNDaysAds(accountId, accessToken, n_days);
+  async getActiveAdsAdsWithImages(accountId: string, accessToken: string): Promise<MetaAdMetricsWithImages[]> {
+    const adMetrics = await this.performanceService.getActiveAds(accountId, accessToken);
     const result: MetaAdMetricsWithImages[] = [];
 
     for (const ad of adMetrics) {

@@ -1,11 +1,10 @@
-import { MetaPerformanceWithImageService } from "../../data/meta/meta-performance-with-image.service";
 import { findPatternInLowPerformingStaticAds } from "../../intelligence/pattern-identification/low-performing-patterns";
 import { WorkflowPipelineContext, WorkflowStep } from "../workflow-step";
 
 export class FindStaticLowPerformingPattern extends WorkflowStep {
   outputKey: string = "lowPerformingPatterns";
   constructor() {
-    super("Fetch Meta Ads", ["metaAds"]);
+    super("Find low performing ads pattern", ["metaAds"]);
   }
   async validate(context: WorkflowPipelineContext): Promise<void> {
     await super.validate(context);

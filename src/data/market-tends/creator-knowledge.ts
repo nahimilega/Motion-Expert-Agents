@@ -9,29 +9,26 @@ interface CreatorKnowledgeData {
  */
 const creatorDatabase: CreatorKnowledgeData[] = [
   {
-    name: "darray_derry",
+    name: "dara_denney",
     brandType: "beauty",
-    content: "Lifestyle tips for modern minimalists.",
+    content: `Leverage User-Generated Content (UGC): Authentic content from real users can significantly boost engagement and trust. In her Performance Creative Master Course, Dara emphasizes the importance of integrating UGC strategies that resonate with audiences
+Sustainability and Eco-Friendly Practices: Consumers are prioritizing eco-conscious products, leading brands to develop waterless beauty items, sustainable packaging, and environmentally friendly formulations`,
   },
   {
-    name: "jane_smith",
-    brandType: "tech",
-    content: "Latest updates on emerging technologies.",
+    name: "dara_denney",
+    brandType: "shoes",
+    content: `Press Screenshots: Highlighting media coverage or endorsements can enhance credibility and attract attention.
+Founder's Story: Sharing the brand's origin story or the founder's journey can create an emotional connection with the audience.
+Statistics Ads: Presenting compelling data or statistics about the product's benefits can appeal to analytical customers.
+    `,
   },
   {
     name: "alex_wong",
     brandType: "fitness",
-    content: "Daily workout routines for busy professionals.",
-  },
-  {
-    name: "emma_garcia",
-    brandType: "food",
-    content: "Simple, nutritious recipes for health-conscious foodies.",
-  },
-  {
-    name: "emma_garcia",
-    brandType: "travel",
-    content: "Budget-friendly travel guides to exotic destinations.",
+    content: `Workout Demonstrations: Show exercises with proper form and technique.
+Before & After Transformations: Real progress stories boost credibility.
+Challenges & Routines: 30-day fitness challenges increase engagement.
+Behind-the-Scenes: Show product creation, athlete partnerships, or team workouts.`,
   },
 ];
 
@@ -42,36 +39,9 @@ const creatorDatabase: CreatorKnowledgeData[] = [
  * @param brandType - The type of brand/content
  * @returns Promise that resolves to the creator's content or error message
  */
-function fetchCreatorData(creatorName: string, brandType: string): string | undefined {
+export function fetchCreatorData(creatorName: string, brandType: string): string | undefined {
   const result = creatorDatabase.find((creator) => creator.name.toLowerCase() === creatorName.toLowerCase() && creator.brandType.toLowerCase() === brandType.toLowerCase());
   if (result) {
     return result.content;
   }
 }
-
-/**
- * Example usage
- */
-async function example() {
-  try {
-    // Example 1: Fetch existing data
-    const techContent = await fetchCreatorData("jane_smith", "tech");
-    console.log("Tech content:", techContent);
-
-    // Example 2: Fetch from creator with multiple brand types
-    const foodContent = await fetchCreatorData("emma_garcia", "food");
-    console.log("Food content:", foodContent);
-
-    // Example 3: Fetch non-existent data
-    const nonExistentContent = await fetchCreatorData("john_doe", "music");
-    console.log("Non-existent content:", nonExistentContent);
-  } catch (error) {
-    console.error("Error fetching creator data:", error);
-  }
-}
-
-// Run the example
-example();
-
-// Export the function for use in other modules
-export { fetchCreatorData };

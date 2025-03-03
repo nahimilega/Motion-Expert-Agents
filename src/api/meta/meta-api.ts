@@ -62,29 +62,39 @@ export class MetaApiClient {
    * Configure Axios interceptors for request/response logging
    */
   private setupInterceptors(): void {
-    // Request interceptor for timing and logging
-    // this.api.interceptors.request.use(
-    //   (config) => {
-    //     config.metadata = { startTime: new Date() };
-    //     return config;
-    //   },
-    //   (error) => Promise.reject(error)
-    // );
-    // // Response interceptor for logging
-    // this.api.interceptors.response.use(
-    //   (response) => {
-    //     const duration = new Date().getTime() - (response.config.metadata?.startTime?.getTime() || 0);
-    //     console.log(`${response.config.method?.toUpperCase()} ${response.config.url} - ${response.status} (${duration}ms)`);
-    //     return response;
-    //   },
-    //   (error) => {
-    //     if (error.response) {
-    //       const duration = new Date().getTime() - (error.config.metadata?.startTime?.getTime() || 0);
-    //       console.error(`${error.config.method?.toUpperCase()} ${error.config.url} - ${error.response.status} (${duration}ms)`);
-    //     }
-    //     return Promise.reject(error);
-    //   }
-    // );
+    this.api.interceptors.request.use(
+      (config) => {
+        (config as any).startTime = new Date().getTime();
+        return config;
+      },
+      (error) => {
+        console.error("[REQUEST ERROR]", error);
+        return Promise.reject(error);
+      }
+    );
+
+    this.api.interceptors.response.use(
+      (response) => {
+        // For successful responses, calculate and log duration
+        const startTime = (response.config as any).startTime;
+        const duration = startTime ? new Date().getTime() - startTime : 0;
+
+        console.log(`[RESPONSE] ${response.status} ${response.config.method?.toUpperCase()} ${response.config.url} (${duration}ms)`);
+        return response;
+      },
+      (error) => {
+        if (error.config) {
+          const startTime = (error.config as any).startTime;
+          const duration = startTime ? new Date().getTime() - startTime : 0;
+
+          console.error(`[RESPONSE ERROR] ${error.response?.status || "Network Error"} ${error.config.method?.toUpperCase()} ${error.config.url} (${duration}ms)`, error.response?.data || error.message);
+        } else {
+          console.error("[RESPONSE ERROR] Request configuration not available", error.message);
+        }
+
+        return Promise.reject(error);
+      }
+    );
   }
 
   public async fetchData(endpoint: string, params: Record<string, any>): Promise<axios.AxiosResponse<ApiResponse<any>, any>> {

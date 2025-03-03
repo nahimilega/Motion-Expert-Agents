@@ -9,7 +9,7 @@ export class FetchMetaAdsWithImage extends WorkflowStep {
   }
 
   async execute(context: WorkflowPipelineContext): Promise<WorkflowPipelineContext> {
-    const results = await this.metaPerformanceService.getLastNDaysAdsWithImages(context["metaAccountId"], context["metaAccessToken"]);
+    const results = await this.metaPerformanceService.getActiveAdsAdsWithImages(context["metaAccountId"], context["metaAccessToken"]);
     const adsWithImages = [];
     for (const ad of results) {
       if (ad.image_urls.length > 0) {

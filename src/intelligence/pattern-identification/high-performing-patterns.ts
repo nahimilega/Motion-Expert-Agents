@@ -7,9 +7,10 @@ const system_prompt = `You are an expert Meta Ads Creative Strategist with deep 
 `;
 const user_prompt = `You are an expert Meta Ads Creative Strategist with deep expertise in:
 You are given these high-performing static ads to analyze and find common patterns in them.
-You need to identify the common patterns in these high-performing static ads and provide insights to the creative team to improve the performance of the low-performing static ads.
-Divide the high-performing static ads into groups based on the common patterns you identify
-`;
+You need to identify the common patterns in these high-performing static ads.
+Divide the high-performing static ads into groups based on the common patterns you identify.
+Somethings to check for are the heading, CTA, physological triggers, visuals, offers etc
+For each pattern, provide proper examples from the images given to back up your analysis.`;
 
 export async function findPatternInHighPerformingStaticAds(metaAds: MetaAdMetricsWithImages[]): Promise<string> {
   const highPerformingMetaAds: MetaAdMetricsWithImages[] = metaTopPerformingAdsByRevenue(metaAds);

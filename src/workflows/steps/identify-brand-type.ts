@@ -1,3 +1,4 @@
+import { findBrandTypeByAdImage } from "../../utils/brand-type-identification";
 import { WorkflowPipelineContext, WorkflowStep } from "../workflow-step";
 
 export class IdentifyBrandType extends WorkflowStep {
@@ -9,7 +10,7 @@ export class IdentifyBrandType extends WorkflowStep {
   async execute(context: WorkflowPipelineContext): Promise<WorkflowPipelineContext> {
     return {
       ...context,
-      [this.outputKey]: "brandType",
+      [this.outputKey]: await findBrandTypeByAdImage(context["metaAds"]),
     };
   }
 }
