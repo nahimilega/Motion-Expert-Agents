@@ -23,7 +23,8 @@ const tools = [
             description: "What patterns are not working. based on the above patterns. Provide them in proper format with justification and examples. Keep it multiline insights. keep it different from what's working. With proper examples and data points to back up your analysis.",
           },
           recommendations: {
-            type: "string",
+            type: "array",
+            items: { type: "string" },
             description: "Recommendations based on the above insights. Provide them in proper format with justification and examples. Keep it multiline insights. Provide proper examples and data points to back up your analysis. With proper examples and data points to back up your analysis.",
           },
         },
@@ -49,7 +50,7 @@ ${externalKnowledge}`;
   }
   user_prompt += `Based on this do a thorough analysis of the high performing and low performing creative patterns and provide recommendations on what's working, what's not working and what should be done next.
 Write as expert-level analysis in the tone of a McKinsey analyst. Focus only on the most impactful insights. Povide different insights for each pointer
-Set tone as human, like Meta expert creative stratagit and McKinsey analyst. Whole point it people trust your insight and implement it... and not just think some generic random advice. Provide objective and actionable insights with proper examples and data points to back up.`;
+Set tone as human, like Meta expert creative stratagits and McKinsey analyst. Whole point it people trust your insight and implement it... and not just think some generic random advice. Provide objective and actionable insights with proper examples and data points to back up.`;
 
   const messages = [
     { role: "system", content: system_prompt },
@@ -71,7 +72,7 @@ export async function findWhatsWorkingWhatsNotRecommendationJson(highPerformingP
 
   const messages = generateWhatsWorkingWhatsNotPrompt(highPerformingPatterns, lowPerformingPatterns, externalKnowledge, externalKnowledgePromptContext);
   messages.push({ role: "system", content: recommendationString });
-  messages.push({ role: "user", content: "Provide these in a proper json format. Keep limited to 3-4, focues on overlooked intresting datapoints. Avoid generic insights, Be very specific and actionable." });
+  messages.push({ role: "user", content: "Provide these in a proper json format. Keep limited to 4-5, focues on overlooked intresting datapoints. Avoid generic insights, Be very specific and actionable. Add name of the creator when using creator insights. Avoid generic language as make catchy etc" });
 
   return await makeOpenAIRequestWithFunctionCall({
     messages: messages,
@@ -83,6 +84,6 @@ export async function findWhatsWorkingWhatsNotRecommendationJson(highPerformingP
 
 export async function findWhatsWorkingWhatsNotRecommendationJsonWithCreatorContext(highPerformingPatterns: string, lowPerformingPatterns: string, creatorName: string, brandType: string): Promise<JSON> {
   const externalKnowledge = fetchCreatorData(creatorName, brandType);
-  const externalKnowledgePromptContext = `Here are some tips from ${creatorName} on how to improve ad performance for this brand type`;
+  const externalKnowledgePromptContext = `Here are some tips from ${creatorName} on how to improve ad performance for this brand type. Always add name of creator when using external knowledge`;
   return await findWhatsWorkingWhatsNotRecommendationJson(highPerformingPatterns, lowPerformingPatterns, externalKnowledge, externalKnowledgePromptContext);
 }

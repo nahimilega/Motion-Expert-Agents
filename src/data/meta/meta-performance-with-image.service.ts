@@ -2,8 +2,6 @@ import { MetaAdMetricsWithImages } from "../../models/MetaAd";
 import { MetaApiClient } from "../../api/meta/meta-api";
 import { MetaPerformanceService } from "./meta-performance.sevice";
 
-// Extend the existing interface with image URLs
-
 export class MetaPerformanceWithImageService {
   private readonly apiClient: MetaApiClient;
   private readonly performanceService: MetaPerformanceService;

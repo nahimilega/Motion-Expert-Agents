@@ -8,7 +8,7 @@ const user_prompt = `You are an expert Meta Ads Creative Strategist with deep ex
 You are given these low-performing static ads to analyze and find common patterns in them.
 You need to identify the common patterns in these low-performing static ads.
 Divide the low-performing static ads into groups based on the common patterns you identify.
-Somethings to check for are the heading, CTA, physological triggers, visuals, offers etc.
+Somethings to check for are the heading, CTA, physiological triggers, visuals, offers etc.
 For each pattern, provide proper examples from the images given to back up your analysis.`;
 
 export async function findPatternInLowPerformingStaticAds(metaAds: MetaAdMetricsWithImages[]): Promise<string> {

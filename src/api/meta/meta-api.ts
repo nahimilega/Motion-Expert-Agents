@@ -102,7 +102,7 @@ export class MetaApiClient {
       return await this.api.get<ApiResponse<any>>(endpoint, { params: params });
     } catch (error) {
       this.handleError(`Error fetching data from ${endpoint}`, error);
-      throw error; // Re-throw to allow caller to handle the error
+      throw error;
     }
   }
 
@@ -124,18 +124,15 @@ export class MetaApiClient {
       let after: string | null = null;
       let hasMorePages = true;
 
-      // Handle pagination
       while (hasMorePages) {
         stats.totalPages++;
         console.log(`Fetching page ${stats.totalPages} from ${endpoint}${after ? " with cursor: " + after : ""}`);
 
-        // Add pagination cursor if available
         const pageParams = { ...params };
         if (after) {
           pageParams.after = after;
         }
 
-        // Make the API request with built-in retries
         try {
           const response = await this.fetchData(endpoint, pageParams);
           const responseData = response.data;
@@ -148,11 +145,9 @@ export class MetaApiClient {
 
           console.log(`Received ${items.length} items from page ${stats.totalPages}`);
 
-          // Add all items to our results array
           allItems.push(...items);
           stats.successfulPages++;
 
-          // Check if there are more pages
           if (responseData.paging?.cursors?.after) {
             after = responseData.paging.cursors.after;
           } else {
@@ -160,7 +155,6 @@ export class MetaApiClient {
             hasMorePages = false;
           }
         } catch (error) {
-          // Even with retries, we ultimately failed to get this page
           stats.failedPages++;
           this.handleError(`Failed to fetch page ${stats.totalPages}${after ? " with cursor: " + after : ""} after all retry attempts`, error);
           hasMorePages = false;

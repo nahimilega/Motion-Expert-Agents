@@ -43,7 +43,6 @@ async function makeOpenAIRequest(options: OpenAIRequestOptions): Promise<ChatCom
   const { messages, model = "", maxTokens = 800, temperature = 0, frequencyPenalty = 0, presencePenalty = 0, tools = undefined, toolChoice = undefined } = options;
 
   try {
-    // Format the request parameters to match the OpenAI API
     const requestParams: ChatCompletionCreateParamsNonStreaming = {
       model: model,
       messages: messages,
@@ -53,7 +52,6 @@ async function makeOpenAIRequest(options: OpenAIRequestOptions): Promise<ChatCom
       presence_penalty: presencePenalty,
     };
 
-    // Add optional parameters if provided
     if (tools) {
       requestParams.tools = tools;
     }
@@ -65,7 +63,6 @@ async function makeOpenAIRequest(options: OpenAIRequestOptions): Promise<ChatCom
     const response = await client.chat.completions.create(requestParams);
     return response;
   } catch (error) {
-    // Just throw the error without retry
     const errorMessage = `Error in calling AI Model: ${error instanceof Error ? error.message : String(error)}`;
     console.error(errorMessage);
     throw new Error(errorMessage);
@@ -155,73 +152,4 @@ export async function makeOpenAIRequestWithFunctionCall(options: OpenAIRequestOp
   }
 
   throw new Error(`Failed after ${maxRetries} attempts:  || "Unknown error"}`);
-}
-
-/**
- * Example usage
- */
-async function example(): Promise<void> {
-  try {
-    // Example 1: Basic request with no retry (might fail)
-    try {
-      const basicResult = await makeOpenAIRequest({
-        messages: [
-          { role: "system", content: "You are a helpful assistant." },
-          { role: "user", content: "Tell me about Node.js" },
-        ],
-      });
-      console.log("Basic result:", JSON.stringify(basicResult, null, 2));
-    } catch (error) {
-      console.error("Basic request failed:", error instanceof Error ? error.message : String(error));
-    }
-
-    // Example 2: Get just the content string with retry
-    try {
-      const contentOnly = await makeOpenAIRequestWithStringOutput({
-        messages: [
-          { role: "system", content: "You are a helpful assistant." },
-          { role: "user", content: "What is the capital of France?" },
-        ],
-        temperature: 0.3,
-      });
-      console.log("Content only:", contentOnly);
-    } catch (error) {
-      console.error("String output request failed:", error instanceof Error ? error.message : String(error));
-    }
-
-    // Example 3: Function calling with validation and retry
-    try {
-      const toolsResult = await makeOpenAIRequestWithFunctionCall({
-        messages: [
-          { role: "system", content: "You are a helpful assistant." },
-          { role: "user", content: "What's the weather in New York?" },
-        ],
-        tools: [
-          {
-            type: "function",
-            function: {
-              name: "getWeather",
-              description: "Get the current weather in a location",
-              parameters: {
-                type: "object",
-                properties: {
-                  location: {
-                    type: "string",
-                    description: "The city and state, e.g. San Francisco, CA",
-                  },
-                },
-                required: ["location"],
-              },
-            },
-          },
-        ],
-        toolChoice: "auto",
-      });
-      console.log("Tools result:", JSON.stringify(toolsResult, null, 2));
-    } catch (error) {
-      console.error("Function call request failed:", error instanceof Error ? error.message : String(error));
-    }
-  } catch (error) {
-    console.error("Example failed:", error instanceof Error ? error.message : String(error));
-  }
 }
